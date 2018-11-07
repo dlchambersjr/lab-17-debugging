@@ -10,4 +10,10 @@ router.get('/api/v1/coops', (request, response) => {
   });
 });
 
+router.post('/api/v1/coops', (request, response) => {
+
+  throw new Error('ouch');
+
+});
+
 export default router;

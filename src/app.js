@@ -4,7 +4,7 @@ import error from './middleware/error.js';
 import chickenRouter from './chicken/router.js';
 import coopRouter from './coop/router.js';
 
-const app = express;
+const app = express();
 
 app.use(chickenRouter);
 app.use(coopRouter);
@@ -14,13 +14,13 @@ app.use(error);
 
 let server;
 
-module.exports =  {
+module.exports = {
   app,
   start: (port) => {
     server = app.listen(port, () => console.log('Listening on port ' + port));
   },
   stop: () => {
-    server.close( () => {
+    server.close(() => {
       console.log('Server has been stopped');
     });
   },

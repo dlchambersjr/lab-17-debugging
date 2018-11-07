@@ -20,16 +20,16 @@ describe('app', () => {
       const response = await mockRequest.get('/api/v1/chickens');
       expect(response.body).toEqual([]);
     });
-    
+
     it('should get one chicken after added', async () => {
-      
-      await Chicken.create({name: 'Fred'});
-      await Chicken.create({name: 'Velma'});
-      
+
+      await Chicken.create({ name: 'Fred' });
+      await Chicken.create({ name: 'Velma' });
+
       const response = await mockRequest.get('/api/v1/chickens');
       expect(response.body.length).toEqual(2);
     });
-    
+
   });
 
   describe('coops', () => {
@@ -38,16 +38,36 @@ describe('app', () => {
       const response = await mockRequest.get('/api/v1/coops');
       expect(response.body).toEqual([]);
     });
-    
+
     it('should get one coop after added', async () => {
-      
-      await Coop.create({location: 'Red Barn'});
-      await Coop.create({location: 'Grotto'});
-      
+
+      await Coop.create({ location: 'Red Barn' });
+      await Coop.create({ location: 'Grotto' });
+
       const response = await mockRequest.get('/api/v1/coops');
       expect(response.body.length).toEqual(2);
     });
-    
+
   });
+
+  describe('Test for errors', () => {
+
+    it('should test for 404 - not found', async () => {
+
+      const response = await mockRequest.get('/api/v1/badpath');
+      expect(response.body.error).toBe('Resource Not Found');
+      expect(response.status).toBe(404);
+
+    });
+
+    it('should test for 500 - error', async () => {
+      const response = await mockRequest.post(`/api/v1/coops`).send();
+
+      expect(response.status).toBe(500);
+    });
+
+  });
+
+
 });
 

@@ -12,9 +12,9 @@ beforeEach(async () => {
 describe('Chicken', () => {
   it('should create and populate', (done) => {
 
-    Coop.create({location:'Red Barn'}).then(coop => {
+    Coop.create({ location: 'Red Barn' }).then(coop => {
 
-      Chicken.create({name:'Joey', coop}).then((chicken) => {
+      Chicken.create({ name: 'Joey', coop }).then((chicken) => {
 
         expect(chicken.name).toBe('Joey');
 
@@ -25,22 +25,23 @@ describe('Chicken', () => {
           done();
 
         });
-        
+
       });
-      
+
     });
   });
 
   it('should create and populate - async/await', async () => {
 
-    const coop = await Coop.create({location:'Red Barn'});
+    const coop = await Coop.create({ location: 'Blue Barn' });
 
-    const chicken = await Chicken.create({name:'Joey', coop});
+    const chicken = await Chicken.create({ name: 'Billy', coop: coop._id });
 
-    expect(chicken.name).toBe('Joey');
+    expect(chicken.name).toBe('Billy');
 
-    const pollo = Chicken.findById(chicken);
+    const pollo = await Chicken.findById(chicken._id).populate('coop');
 
-    expect(pollo.coop.location).toBe('Red Barn');  
+    expect(pollo.coop.location).toBe('Blue Barn');
+
   });
 });
