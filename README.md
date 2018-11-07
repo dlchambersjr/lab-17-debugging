@@ -1,3 +1,3 @@
 # lab-17-debugging
 
-This is the readme
+I have successfully accomplished the debugging task, deployed to Heroku, and Travis CI.
